@@ -13,14 +13,7 @@ import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-const colors = {
-  white: "#F0F4EF",
-  blue: "#344966",
-  blueLight: "#B4CDED",
-  black: "#0D1821",
-};
-
-const { white, blue, blueLight, black } = colors;
+import { white, blue, blueLight, black } from "../appColors";
 
 export const Container = styled(DefaultContainer)`
   height: 100vh;
@@ -72,6 +65,7 @@ export const TextField = styled(DefaultTextField)`
   & {
     background-color: ${blueLight};
     border-radius: 5px;
+    width: 100%;
   }
 
   & .MuiFormLabel-root.Mui-focused {
