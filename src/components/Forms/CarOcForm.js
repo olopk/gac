@@ -1,5 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Grid, MenuItem } from "@material-ui/core";
+
+import getMakes from "../../api-calls/getMakes";
+
 import {
   Container,
   Header,
@@ -13,7 +16,11 @@ import {
 
 import DatePicker from "../../components/DatePicker/DatePicker";
 
-const carType = ["motocykl", "samochód osobowy", "samochód ciężarowy"];
+const carType = [
+  { label: "motocykl", value: "motorcycle" },
+  { label: "osobowy", value: "car" },
+  { label: "ciężarowy", value: "truck" },
+];
 
 const Input = (props) => (
   <TextField
@@ -23,39 +30,52 @@ const Input = (props) => (
   />
 );
 
-const FormElement = ({ title, type, data, value }) => {
-  console.log(type === "select");
+const FormElement = ({ id, title, type, data, value, onChange }) => {
   switch (type) {
-    case "calendar":
-      console.log("yes");
-
-      return <DatePicker customInput={<Input label={title} value={value} />} />;
-      break;
-    case "hourCalendar":
-      return <DatePicker customInput={<Input label={title} value={value} />} />;
-      break;
-    case "number":
-      return <Input label={title} value={value} />;
-      break;
+    // case "calendar":
+    //   return (
+    //     <DatePicker
+    //       customInput={<Input label={title} />}
+    //       value={value}
+    //       id={id}
+    //       onChange={onChange}
+    //     />
+    //   );
+    //   break;
     case "select":
-      console.log(data);
-      console.log(type);
       return (
-        <Input label={title} select>
-          {data.map((el) => (
-            <MenuItem value={el}>{el}</MenuItem>
+        <Input
+          label={title}
+          select
+          value={value}
+          id={id}
+          onChange={(e) => {
+            onChange(e.target.value, id);
+          }}
+        >
+          {data.map(({ label, value }) => (
+            <MenuItem key={`${label}-${value}`} value={value}>
+              {label}
+            </MenuItem>
           ))}
         </Input>
       );
       break;
     default:
-      return <Input label={title} value={value} />;
+      return (
+        <Input
+          label={title}
+          value={value}
+          type={type === "number" ? "number" : "text"}
+          onChange={(e) => onChange(e.target.value, id)}
+        />
+      );
   }
 };
 
 const SelectOption = () => {
   const [formValues, SetFormValues] = useState({
-    rodzajPojazdu: "",
+    rodzajPojazdu: "car",
     rokProdukcji: "",
     marka: "",
     model: "",
@@ -86,8 +106,8 @@ const SelectOption = () => {
     terminKontakt,
   } = formValues;
 
-  const handleChange = (event, id) =>
-    SetFormValues({ ...formValues, [id]: event.target.value });
+  const handleChange = (value, id) =>
+    SetFormValues({ ...formValues, [id]: value });
 
   const [asyncData, SetAsyncData] = useState({
     marka: [],
@@ -98,54 +118,64 @@ const SelectOption = () => {
     mocSilnika: [],
   });
 
-  const asyncDataSetter = (type, data) =>
-    SetAsyncData({ ...asyncData, [type]: data });
+  console.log(asyncData);
+
+  const asyncDataSetter = (id, data) =>
+    SetAsyncData({ ...asyncData, [id]: data });
 
   const carFieldsData = [
     {
-      title: "Rodzaj pojazdu",
+      id: "rodzajPojazdu",
+      title: "rodzaj pojazdu",
       data: carType,
       value: rodzajPojazdu,
       type: "select",
     },
     {
-      title: "Rok produkcji",
+      id: "rokProdukcji",
+      title: "rok produkcji",
       data: null,
       value: rokProdukcji,
       type: "calendar",
     },
     {
-      title: "Marka",
+      id: "marka",
+      title: "marka",
       data: asyncData.marka,
       value: marka,
       type: "select",
     },
     {
-      title: "Model",
+      id: "model",
+      title: "model",
       data: asyncData.model,
       value: model,
       type: "select",
     },
     {
-      title: "Typ nadwozia",
+      id: "typNadwozia",
+      title: "typ nadwozia",
       data: asyncData.typNadwozia,
       value: typNadwozia,
       type: "select",
     },
     {
-      title: "Paliwo",
+      id: "paliwo",
+      title: "paliwo",
       data: asyncData.paliwo,
       value: paliwo,
       type: "select",
     },
     {
-      title: "Pojemność",
+      id: "pojemnosc",
+      title: "pojemność",
       data: asyncData.pojemnosc,
       value: pojemnosc,
       type: "select",
     },
     {
-      title: "Moc silnika",
+      id: "mocSilnika",
+      title: "moc silnika",
       data: asyncData.mocSilnika,
       value: mocSilnika,
       type: "select",
@@ -153,18 +183,21 @@ const SelectOption = () => {
   ];
   const driverFieldsData = [
     {
+      id: "imie",
       title: "Imię",
       data: null,
       value: imie,
       type: "string",
     },
     {
+      id: "nazwisko",
       title: "Nazwisko",
       data: null,
       value: nazwisko,
       type: "string",
     },
     {
+      id: "pesel",
       title: "PESEL",
       data: null,
       value: pesel,
@@ -173,19 +206,26 @@ const SelectOption = () => {
   ];
   const contactFieldsData = [
     {
-      title: "Nr telefonu",
+      id: "nrTelefonu",
+      title: "nr telefonu",
       data: null,
       value: nrTelefonu,
-      type: "number+",
+      type: "number",
     },
     {
-      title: "Termin kontaktu",
+      id: "terminKontakt",
+      title: "termin kontaktu",
       data: null,
       value: terminKontakt,
-      type: "hourCalendar",
+      type: "calendar",
     },
   ];
-  //const sections = ["dane pojazdu", "dane właściciela", "dane kontaktowe"];
+
+  useEffect(async () => {
+    const data = await getMakes(formValues.rodzajPojazdu);
+    asyncDataSetter("marka", data);
+  }, [formValues.rodzajPojazdu]);
+
   return (
     <Container>
       <Grid
@@ -205,8 +245,12 @@ const SelectOption = () => {
               <BlockText>dane pojazdu</BlockText>
             </Grid>
             {carFieldsData.map((field, index) => (
-              <Grid item xs={12} md={3}>
-                <FormElement key={`${field}${index}`} {...field} />
+              <Grid key={`${field}-${index}`} item xs={12} md={3}>
+                <FormElement
+                  key={`${field}${index}`}
+                  {...field}
+                  onChange={handleChange}
+                />
               </Grid>
             ))}
           </Grid>
@@ -215,8 +259,12 @@ const SelectOption = () => {
               <BlockText>dane właściciela</BlockText>
             </Grid>
             {driverFieldsData.map((field, index) => (
-              <Grid item xs={12} md={3}>
-                <FormElement key={`${field}${index}`} {...field} />
+              <Grid key={`${field}-${index}`} item xs={12} md={3}>
+                <FormElement
+                  key={`${field}${index}`}
+                  {...field}
+                  onChange={handleChange}
+                />
               </Grid>
             ))}
           </Grid>
@@ -225,8 +273,12 @@ const SelectOption = () => {
               <BlockText>dane kontaktowe</BlockText>
             </Grid>
             {contactFieldsData.map((field, index) => (
-              <Grid item xs={12} md={3}>
-                <FormElement key={`${field}${index}`} {...field} />
+              <Grid key={`${field}-${index}`} item xs={12} md={3}>
+                <FormElement
+                  key={`${field}${index}`}
+                  {...field}
+                  onChange={handleChange}
+                />
               </Grid>
             ))}
           </Grid>
