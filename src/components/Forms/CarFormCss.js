@@ -6,6 +6,7 @@ import {
   Paper as DefaultPaper,
   TextField as DefaultTextField,
   Select as DefaultSelect,
+  Typography,
 } from "@material-ui/core";
 
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
@@ -23,12 +24,18 @@ export const TextBox = styled.div`
   margin-bottom: 3vh;
 `;
 
-export const Typography = styled(DefaultTypography)`
+export const Header = styled.h1`
   && {
     font-size: 1.6rem;
   }
   color: ${white};
   text-align: center;
+`;
+export const BlockText = styled(Typography)`
+  && {
+    font-size: 1.3rem;
+  }
+  color: ${white};
 `;
 
 export const Paper = styled(DefaultPaper)`
@@ -53,6 +60,7 @@ export const GobackBox = styled.div`
 
 export const GobackText = styled(Typography)`
   font-size: 1.2rem;
+  color: ${white};
 `;
 
 export const BackIcon = styled(ArrowBackIosIcon)`
@@ -60,6 +68,8 @@ export const BackIcon = styled(ArrowBackIosIcon)`
     color: ${white};
   }
 `;
+
+// FIELDS
 
 export const TextField = styled(DefaultTextField)`
   & {

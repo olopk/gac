@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Grid, MenuItem } from "@material-ui/core";
-
 import {
   Container,
-  Typography,
+  Header,
   TextField,
+  BlockText,
   TextBox,
   GobackBox,
   GobackText,
@@ -13,7 +13,7 @@ import {
 
 import DatePicker from "../../components/DatePicker/DatePicker";
 
-const carType = ["MOTOCYKL", "SAMOCHÓD OSOBOWY", "SAMOCHÓD CIĘŻAROWY"];
+const carType = ["motocykl", "samochód osobowy", "samochód ciężarowy"];
 
 const Input = (props) => (
   <TextField
@@ -22,6 +22,36 @@ const Input = (props) => (
     InputProps={{ disableUnderline: true }}
   />
 );
+
+const FormElement = ({ title, type, data, value }) => {
+  console.log(type === "select");
+  switch (type) {
+    case "calendar":
+      console.log("yes");
+
+      return <DatePicker customInput={<Input label={title} value={value} />} />;
+      break;
+    case "hourCalendar":
+      return <DatePicker customInput={<Input label={title} value={value} />} />;
+      break;
+    case "number":
+      return <Input label={title} value={value} />;
+      break;
+    case "select":
+      console.log(data);
+      console.log(type);
+      return (
+        <Input label={title} select>
+          {data.map((el) => (
+            <MenuItem value={el}>{el}</MenuItem>
+          ))}
+        </Input>
+      );
+      break;
+    default:
+      return <Input label={title} value={value} />;
+  }
+};
 
 const SelectOption = () => {
   const [formValues, SetFormValues] = useState({
@@ -55,6 +85,10 @@ const SelectOption = () => {
     nrTelefonu,
     terminKontakt,
   } = formValues;
+
+  const handleChange = (event, id) =>
+    SetFormValues({ ...formValues, [id]: event.target.value });
+
   const [asyncData, SetAsyncData] = useState({
     marka: [],
     model: [],
@@ -67,12 +101,7 @@ const SelectOption = () => {
   const asyncDataSetter = (type, data) =>
     SetAsyncData({ ...asyncData, [type]: data });
 
-  const handleChange = (event, id) =>
-    SetFormValues({ ...formValues, [id]: event.target.value });
-
-  const sections = ["Dane pojazdu", "Dane właściciela", "Dane kontaktowe"];
-
-  const fieldsData = [
+  const carFieldsData = [
     {
       title: "Rodzaj pojazdu",
       data: carType,
@@ -121,6 +150,8 @@ const SelectOption = () => {
       value: mocSilnika,
       type: "select",
     },
+  ];
+  const driverFieldsData = [
     {
       title: "Imię",
       data: null,
@@ -139,6 +170,8 @@ const SelectOption = () => {
       value: pesel,
       type: "number",
     },
+  ];
+  const contactFieldsData = [
     {
       title: "Nr telefonu",
       data: null,
@@ -152,7 +185,7 @@ const SelectOption = () => {
       type: "hourCalendar",
     },
   ];
-
+  //const sections = ["dane pojazdu", "dane właściciela", "dane kontaktowe"];
   return (
     <Container>
       <Grid
@@ -163,42 +196,45 @@ const SelectOption = () => {
       >
         <Grid item xs={12}>
           <TextBox>
-            <Typography>Niezbędne informacje</Typography>
+            <Header>niezbędne informacje</Header>
           </TextBox>
         </Grid>
         <Grid item xs={12}>
           <Grid container spacing={1}>
-            <Grid item xs={12}></Grid>
-            <Grid item xs={12} md={3}>
-              <Input label="Rodzaj pojazdu" select>
-                {carType.map((el) => (
-                  <MenuItem value={el}>{el}</MenuItem>
-                ))}
-              </Input>
+            <Grid item xs={12}>
+              <BlockText>dane pojazdu</BlockText>
             </Grid>
-            <Grid item xs={12} md={3}>
-              <DatePicker customInput={<Input label="Rok produkcji" />} />
+            {carFieldsData.map((field, index) => (
+              <Grid item xs={12} md={3}>
+                <FormElement key={`${field}${index}`} {...field} />
+              </Grid>
+            ))}
+          </Grid>
+          <Grid container spacing={1}>
+            <Grid item xs={12}>
+              <BlockText>dane właściciela</BlockText>
             </Grid>
-            <Grid item xs={12} md={3}>
-              <Input label="Marka" select>
-                {carType.map((el) => (
-                  <MenuItem value={el}>{el}</MenuItem>
-                ))}
-              </Input>
+            {driverFieldsData.map((field, index) => (
+              <Grid item xs={12} md={3}>
+                <FormElement key={`${field}${index}`} {...field} />
+              </Grid>
+            ))}
+          </Grid>
+          <Grid container spacing={1}>
+            <Grid item xs={12}>
+              <BlockText>dane kontaktowe</BlockText>
             </Grid>
-            <Grid item xs={12} md={3}>
-              <Input label="Model" select>
-                {carType.map((el) => (
-                  <MenuItem value={el}>{el}</MenuItem>
-                ))}
-              </Input>
-            </Grid>
+            {contactFieldsData.map((field, index) => (
+              <Grid item xs={12} md={3}>
+                <FormElement key={`${field}${index}`} {...field} />
+              </Grid>
+            ))}
           </Grid>
         </Grid>
         <Grid item xs={12}>
           <GobackBox>
             <BackIcon />
-            <GobackText>Cofnij</GobackText>
+            <GobackText>cofnij</GobackText>
           </GobackBox>
         </Grid>
       </Grid>
