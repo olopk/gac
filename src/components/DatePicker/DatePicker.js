@@ -6,15 +6,12 @@ import {
   DatePickerIconsWrapper,
 } from "./DatePickerCss";
 
+import FormInput from "../Forms/FormFields/FormInput";
 import DateRangeIcon from "@material-ui/icons/DateRange";
 import AccessTimeIcon from "@material-ui/icons/AccessTime";
 import ClearIcon from "@material-ui/icons/Clear";
 
-import { format } from "date-fns";
-
-const DatePicker = ({ disabled, value, onChange, customInput, title, id }) => {
-  // const date = value ? new Date(value) : new Date();
-
+const DatePicker = ({ disabled, value, onChange, title, id }) => {
   const dateFormat = id === "rokProdukcji" ? "yyyy" : "dd-MM-yyyy:H:mm";
 
   return (
@@ -24,15 +21,14 @@ const DatePicker = ({ disabled, value, onChange, customInput, title, id }) => {
         dateFormat={dateFormat}
         showTimeInput={id === "rokProdukcji" ? false : true}
         showYearPicker={id === "rokProdukcji" ? true : false}
-        customInput={customInput}
+        customInput={<FormInput label={title} />}
+        maxDate={id === "rokProdukcji" ? new Date() : null}
         onChange={(e) => {
-          console.log(e);
-          console.log(format(e, "dd-MM-yyyy"));
           onChange(e, id);
         }}
         disabled={disabled}
         calendarContainer={CalendarContainer}
-        selected={value}
+        selected={value ? new Date(value) : null}
       />
       <DatePickerIconsWrapper>
         {value && (

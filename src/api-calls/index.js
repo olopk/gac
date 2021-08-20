@@ -1,3 +1,4 @@
 import getMakes from "./getMakes";
+import getModels from "./getModels";
 
-export default { getMakes };
+export { getMakes, getModels };

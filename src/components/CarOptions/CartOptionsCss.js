@@ -14,7 +14,7 @@ const colors = {
   blue: "#344966",
 };
 
-const { white, blue } = colors;
+const { white } = colors;
 
 export const Container = styled(DefaultContainer)`
   height: 100vh;

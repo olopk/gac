@@ -1,0 +1,131 @@
+export const carFieldsData = (
+  {
+    model,
+    typNadwozia,
+    paliwo,
+    pojemnosc,
+    mocSilnika,
+    rodzajPojazdu,
+    rokProdukcji,
+    marka,
+  },
+  asyncData
+) => [
+  {
+    id: "rodzajPojazdu",
+    title: "rodzaj pojazdu",
+    data: [
+      { label: "motocykl", value: "motorcycle" },
+      { label: "osobowy", value: "car" },
+      { label: "ciężarowy", value: "truck" },
+    ],
+    value: rodzajPojazdu,
+    type: "select",
+  },
+  {
+    id: "rokProdukcji",
+    title: "rok produkcji",
+    data: null,
+    value: rokProdukcji,
+    type: "calendar",
+  },
+  {
+    id: "marka",
+    title: "marka",
+    data: asyncData.marka,
+    value: marka,
+    type: "autocomplete",
+  },
+  {
+    id: "model",
+    title: "model",
+    data: asyncData.model,
+    value: model,
+    type: "select",
+  },
+  {
+    id: "typNadwozia",
+    title: "typ nadwozia",
+    data: [
+      { label: "sedan", value: "sedan" },
+      { label: "coupe", value: "coupe" },
+      { label: "hatchback", value: "hatchback" },
+      { label: "SUV", value: "SUV" },
+      { label: "limuzyna", value: "limuzyna" },
+      { label: "kabriolet", value: "kabriolet" },
+      { label: "kombi", value: "kombi" },
+      { label: "minivan", value: "minivan" },
+      { label: "mikrovan", value: "mikrovan" },
+      { label: "kombi", value: "kombi" },
+      { label: "pick-up", value: "pick-up" },
+      { label: "roadster", value: "roadster" },
+      { label: "van", value: "van" },
+    ],
+    value: typNadwozia,
+    type: "select",
+  },
+  {
+    id: "paliwo",
+    title: "paliwo",
+    data: [
+      { label: "Benzyna", value: "Benzyna" },
+      { label: "Benzyna + CNG", value: "Benzyna + CNG" },
+      { label: "Benzyna + LPG", value: "Benzyna + LPG" },
+      { label: "Diesel", value: "Diesel" },
+      { label: "Elektryczny", value: "Elektryczny" },
+    ],
+    value: paliwo,
+    type: "select",
+  },
+  {
+    id: "pojemnosc",
+    title: "pojemność",
+    data: asyncData.pojemnosc,
+    value: pojemnosc,
+  },
+  {
+    id: "mocSilnika",
+    title: "moc silnika",
+    data: asyncData.mocSilnika,
+    value: mocSilnika,
+  },
+];
+export const driverFieldsData = ({ imie, nazwisko, pesel }) => [
+  {
+    id: "imie",
+    title: "Imię",
+    data: null,
+    value: imie,
+    type: "string",
+  },
+  {
+    id: "nazwisko",
+    title: "Nazwisko",
+    data: null,
+    value: nazwisko,
+    type: "string",
+  },
+  {
+    id: "pesel",
+    title: "PESEL",
+    data: null,
+    value: pesel,
+    type: "number",
+  },
+];
+export const contactFieldsData = ({ nrTelefonu, terminKontakt }) => [
+  {
+    id: "nrTelefonu",
+    title: "nr telefonu",
+    data: null,
+    value: nrTelefonu,
+    type: "number",
+  },
+  {
+    id: "terminKontakt",
+    title: "termin kontaktu",
+    data: null,
+    value: terminKontakt,
+    type: "calendar",
+  },
+];

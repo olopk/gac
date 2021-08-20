@@ -1,12 +1,14 @@
+import url from "./url";
+
 const getMakes = async (type) => {
   const request = await fetch(
-    `https://vpic.nhtsa.dot.gov/api/vehicles/GetMakesForVehicleType/${type}?format=json`
+    `${url}/GetMakesForVehicleType/${type}?format=json`
   );
   const data = await request.json();
 
   try {
-    const names = data.Results.map(({ MakeId, MakeName }) => {
-      return { value: MakeId, label: MakeName };
+    const names = data.Results.map(({ MakeName }) => {
+      return { value: MakeName, label: MakeName };
     });
 
     return names;

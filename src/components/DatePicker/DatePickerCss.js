@@ -20,6 +20,10 @@ export const DatePickerWrapper = styled.div`
   & .react-datepicker-wrapper {
     width: 100%;
   }
+
+  &&& .react-datepicker-popper {
+    z-index: 999;
+  }
 `;
 export const CalendarContainer = styled.div`
   background-color: ${white};
@@ -35,10 +39,6 @@ export const CalendarContainer = styled.div`
     padding: 1vh;
   }
   &&&& .react-datepicker__year-text--keyboard-selected {
-    background-color: ${blueLight};
-    color: white;
-  }
-  &&&& .react-datepicker__year-text--today {
     background-color: ${blueLight};
     color: white;
   }
