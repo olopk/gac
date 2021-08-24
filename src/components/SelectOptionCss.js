@@ -19,7 +19,6 @@ export const Container = styled(DefaultContainer)`
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
   }
 `;
 
@@ -36,11 +35,12 @@ export const Paper = styled(DefaultPaper)`
   && {
     background-color: initial;
   }
+  border: 1px solid white;
   display: flex;
   justify-content: center;
   padding: 2vh 0vh;
 `;
 
 export const Image = styled.img`
-  width: 50%;
+  width: 40%;
 `;

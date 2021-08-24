@@ -9,9 +9,9 @@ const App = () => {
   return (
     <Router>
       <Switch>
-        {/* <Route path="/" component={SelectOption} /> */}
-        {/* <Route path="/" component={CarOptions} /> */}
-        <Route path="/" component={CarOcForm} />
+        <Route path="/carinsurance/oc" component={CarOcForm} />
+        <Route path="/carinsurance" component={CarOptions} />
+        <Route path="/" component={SelectOption} />
       </Switch>
     </Router>
   );

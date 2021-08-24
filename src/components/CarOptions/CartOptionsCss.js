@@ -1,63 +1,53 @@
 import styled from "styled-components";
+import { white, blueLight2 } from "../appColors";
 
-//  Default
 import {
   Container as DefaultContainer,
   Typography as DefaultTypography,
   Paper as DefaultPaper,
+  Grid,
 } from "@material-ui/core";
 
-import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
-
-const colors = {
-  white: "#F0F4EF",
-  blue: "#344966",
-};
-
-const { white } = colors;
-
 export const Container = styled(DefaultContainer)`
-  height: 100vh;
+  height: 90vh;
 `;
 
 export const TextBox = styled.div`
-  margin-bottom: 3vh;
+  margin-top: 1vh;
+  color: ${white};
 `;
 
 export const Typography = styled(DefaultTypography)`
-  && {
-    font-size: 1.6rem;
-  }
+  font-size: 1.6rem;
   color: ${white};
   text-align: center;
+`;
+export const TypographyOC = styled(Typography)`
+  && {
+    margin-left: 5vw;
+    font-size: 2rem;
+  }
 `;
 
 export const Paper = styled(DefaultPaper)`
   && {
-    background-color: initial;
+    background-color: ${({ checked }) => (checked ? blueLight2 : "initial")};
   }
+  border: 1px solid white;
   display: flex;
   justify-content: center;
+  flex-direction: column;
+  align-items: center;
   padding: 2vh 0vh;
+  position: relative;
+`;
+export const PaperOC = styled(Paper)`
+  flex-direction: row;
 `;
 
 export const Image = styled.img`
-  width: 50%;
+  width: 30%;
 `;
-
-export const GobackBox = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  margin-top: 5vh;
-`;
-
-export const GobackText = styled(Typography)`
-  font-size: 1.2rem;
-`;
-
-export const BackIcon = styled(ArrowBackIosIcon)`
-  && {
-    color: ${white};
-  }
+export const ImageSm = styled.img`
+  width: 40%;
 `;

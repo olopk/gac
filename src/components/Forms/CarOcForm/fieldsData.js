@@ -1,5 +1,6 @@
 export const carFieldsData = (
   {
+    nrRej,
     model,
     typNadwozia,
     paliwo,
@@ -28,6 +29,12 @@ export const carFieldsData = (
     data: null,
     value: rokProdukcji,
     type: "calendar",
+  },
+  {
+    id: "nrRej",
+    title: "nr rejestracyjny",
+    data: null,
+    value: nrRej,
   },
   {
     id: "marka",

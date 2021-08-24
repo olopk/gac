@@ -1,5 +1,6 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
+import { Link, H1 } from "./styles";
 import {
   Container,
   Typography,
@@ -13,9 +14,7 @@ const SelectOption = () => {
     <Container>
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          <TextBox>
-            <Typography>Wybierz cel ubezpieczenia</Typography>
-          </TextBox>
+          <H1>wybierz cel ubezpieczenia</H1>
         </Grid>
         <Grid item xs={12} md={4}>
           <Paper>
@@ -23,9 +22,11 @@ const SelectOption = () => {
           </Paper>
         </Grid>
         <Grid item xs={12} md={4}>
-          <Paper>
-            <Image src="../assets/car.png" />
-          </Paper>
+          <Link to="/carinsurance">
+            <Paper>
+              <Image src="../assets/car.png" />
+            </Paper>
+          </Link>
         </Grid>
         <Grid item xs={12} md={4}>
           <Paper>

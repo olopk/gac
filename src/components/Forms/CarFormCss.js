@@ -8,30 +8,14 @@ import {
 
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 
-import { white } from "../appColors";
+import { white, blue } from "../appColors";
 
-export const Container = styled(DefaultContainer)`
-  height: 100vh;
-`;
+export const Container = styled(DefaultContainer)``;
 
 export const TextBox = styled.div`
   margin-bottom: 3vh;
 `;
 
-export const H1 = styled.h1`
-  && {
-    font-size: 1.6rem;
-  }
-  color: ${white};
-  text-align: center;
-`;
-export const H2 = styled.h1`
-  && {
-    font-size: 1.2rem;
-  }
-  color: ${white};
-  text-align: center;
-`;
 export const BlockText = styled(Typography)`
   && {
     font-size: 1.3rem;
@@ -52,16 +36,19 @@ export const Image = styled.img`
   width: 50%;
 `;
 
-export const GobackBox = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  margin-top: 5vh;
-`;
-
-export const GobackText = styled(Typography)`
-  font-size: 1.2rem;
+export const LackOfData = styled.div`
+  text-align: center;
   color: ${white};
+  font-size: 0.8rem;
+  border: 1px solid ${white};
+  border-radius: 4px;
+  padding: 7px;
+  cursor: pointer;
+  margin-top: 5vh;
+  &:hover {
+    background-color: ${white};
+    color: ${blue};
+  }
 `;
 
 export const BackIcon = styled(ArrowBackIosIcon)`
